@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class ProgramDescription(object):
@@ -11,7 +13,7 @@ class ProgramDescription(object):
         return self.text
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> ProgramDescription
@@ -37,6 +39,6 @@ class ProgramDescription(object):
             program_description.language = dct.pop("descriptionLanguage")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramDescription: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramDescription: %s", ", ".join(list(dct.keys())))
 
         return program_description

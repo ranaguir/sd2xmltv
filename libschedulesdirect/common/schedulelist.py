@@ -1,7 +1,9 @@
+from __future__ import absolute_import
 import logging
 from datetime import date
-from util import unique
-from schedule import Schedule
+from .util import unique
+from .schedule import Schedule
+import six
 
 
 class ScheduleList(list):
@@ -30,7 +32,7 @@ class ScheduleList(list):
         return list({(broadcast.program_id, broadcast.md5) for schedule in self for broadcast in schedule.broadcasts})
 
     def get_program_max_schedule_dates(self):
-        return [(program_id, max_schedule_date) for program_id, max_schedule_date in {broadcast.program_id: schedule.metadata.start_date for schedule in self.order_by_start_date() for broadcast in schedule.broadcasts}.iteritems()]
+        return [(program_id, max_schedule_date) for program_id, max_schedule_date in six.iteritems({broadcast.program_id: schedule.metadata.start_date for schedule in self.order_by_start_date() for broadcast in schedule.broadcasts})]
 
     def filter_station(self, station_id):
         return ScheduleList(schedule for schedule in self if schedule.station_id == station_id)

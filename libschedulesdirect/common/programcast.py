@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class ProgramCast(object):
@@ -19,7 +21,7 @@ class ProgramCast(object):
         return self.name
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> List[ProgramCast]
@@ -58,6 +60,6 @@ class ProgramCast(object):
             program_cast.character_name = dct.pop("characterName")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramCast: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramCast: %s", ", ".join(list(dct.keys())))
 
         return program_cast

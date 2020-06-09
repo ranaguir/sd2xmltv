@@ -1,3 +1,4 @@
+import six
 
 
 class Channel(object):
@@ -16,7 +17,7 @@ class Channel(object):
         return "{0.guide_number} {0.guide_name}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> Channel

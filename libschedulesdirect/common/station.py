@@ -1,6 +1,8 @@
+from __future__ import absolute_import
 import logging
-from broadcaster import Broadcaster
-from stationlogo import StationLogo
+from .broadcaster import Broadcaster
+from .stationlogo import StationLogo
+import six
 
 
 class Station(object):
@@ -31,7 +33,7 @@ class Station(object):
         return self.name
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> List[Station]
@@ -84,6 +86,6 @@ class Station(object):
             station.is_radio_station = dct.pop("isRadioStation")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Station: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Station: %s", ", ".join(list(dct.keys())))
 
         return station

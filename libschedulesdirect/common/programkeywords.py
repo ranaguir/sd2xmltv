@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -48,6 +49,6 @@ class ProgramKeywords(object):
             program_keywords.general = dct.pop("General")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramKeywords: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramKeywords: %s", ", ".join(list(dct.keys())))
 
         return program_keywords

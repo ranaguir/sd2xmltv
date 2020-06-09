@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class StationLogo(object):
@@ -15,7 +17,7 @@ class StationLogo(object):
         return u"Station Logo {0.width}x{0.height}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> StationLogo
@@ -41,6 +43,6 @@ class StationLogo(object):
             station_logo.md5 = dct.pop("md5")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for StationLogo: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for StationLogo: %s", ", ".join(list(dct.keys())))
 
         return station_logo

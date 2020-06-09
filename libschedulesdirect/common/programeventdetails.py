@@ -1,7 +1,8 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_date
-from eventteam import EventTeam
+from .util import parse_date
+from .eventteam import EventTeam
 
 
 class ProgramEventDetails(object):
@@ -32,6 +33,6 @@ class ProgramEventDetails(object):
                 ped.teams.append(EventTeam.from_dict(team))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramEventDetails: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramEventDetails: %s", ", ".join(list(dct.keys())))
 
         return ped

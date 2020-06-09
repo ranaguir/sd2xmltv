@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -25,6 +26,6 @@ class EventTeam(object):
             event_team.is_home = dct.pop("isHome")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for EventTeam: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for EventTeam: %s", ", ".join(list(dct.keys())))
 
         return event_team

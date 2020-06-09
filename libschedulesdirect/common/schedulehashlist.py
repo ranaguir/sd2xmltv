@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
-from util import parse_date
-from schedulehash import ScheduleHash
+from .util import parse_date
+from .schedulehash import ScheduleHash
 
 
 class ScheduleHashList(list):

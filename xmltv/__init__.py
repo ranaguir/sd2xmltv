@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 __author__ = 'Adrian Strilchuk'
 
 def indent(elem, level=0):
@@ -21,7 +22,7 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-from xmltvdocument import XmltvDocument
-from xmltvchannel import XmltvChannel
-from xmltvprogramme import XmltvProgramme
-from xmltvwriter import XmltvWriter
+from .xmltvdocument import XmltvDocument
+from .xmltvchannel import XmltvChannel
+from .xmltvprogramme import XmltvProgramme
+from .xmltvwriter import XmltvWriter

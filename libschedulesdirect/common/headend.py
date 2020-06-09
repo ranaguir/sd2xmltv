@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import logging
-from lineup import Lineup
+from .lineup import Lineup
+import six
 
 
 class Headend(object):
@@ -16,7 +18,7 @@ class Headend(object):
         return u"{0.headend_id} / {0.transport} / {0.location}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> Headend
@@ -36,6 +38,6 @@ class Headend(object):
         headend.lineups = Lineup.from_iterable(dct.pop("lineups"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Headend: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Headend: %s", ", ".join(list(dct.keys())))
 
         return headend

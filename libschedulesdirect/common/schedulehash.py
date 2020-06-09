@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import logging
 from datetime import date, datetime
+import six
 
 class ScheduleHash(object):
     def __init__(self, station_id, schedule_date):
@@ -19,7 +21,7 @@ class ScheduleHash(object):
         return u"ScheduleHash for Station {0.station_id} on {0.schedule_date}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct, station_id, schedule_date):  # type: (dict, unicode, date) -> ScheduleHash
@@ -45,6 +47,6 @@ class ScheduleHash(object):
             schedule_hash.md5 = dct.pop("md5")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ScheduleMetadata: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ScheduleMetadata: %s", ", ".join(list(dct.keys())))
 
         return schedule_hash

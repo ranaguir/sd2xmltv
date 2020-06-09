@@ -1,7 +1,9 @@
+from __future__ import absolute_import
 import logging
-from lineup import Lineup
-from station import Station
-from channel import Channel
+from .lineup import Lineup
+from .station import Station
+from .channel import Channel
+import six
 
 
 class LineupMap(object):
@@ -16,7 +18,7 @@ class LineupMap(object):
         return u"LineupMap for Lineup {0.lineup_id}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> LineupMap
@@ -37,7 +39,7 @@ class LineupMap(object):
         lineup_map.lineup = Lineup.from_dict(dct.pop("metadata"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for LineupMap: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for LineupMap: %s", ", ".join(list(dct.keys())))
 
         return lineup_map
 

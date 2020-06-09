@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from seasonepisode import SeasonEpisode
+from .seasonepisode import SeasonEpisode
 
 
 class ProgramMetadata(object):

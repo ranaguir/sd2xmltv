@@ -1,12 +1,15 @@
 #!/usr/bin/python
 # coding=utf-8
 
-import api
+from __future__ import absolute_import
+from __future__ import print_function
+from . import api
 from . import batched, parse_datetime, parse_date
-from cache import SchedulesDirectCache
-from common import Status, LineupMap, LineupMapList, ScheduleList, Headend, Lineup, ChangeLineupResponse, ServiceRegion
+from .cache import SchedulesDirectCache
+from .common import Status, LineupMap, LineupMapList, ScheduleList, Headend, Lineup, ChangeLineupResponse, ServiceRegion
 import logging
 import hashlib
+from six.moves import input
 
 
 class SchedulesDirect(object):
@@ -297,7 +300,7 @@ class SchedulesDirect(object):
             print(u"3. Remove lineup")
             print(u"4. List lineup channels.")
             print(u"\nChoose an option or 'x' to exit.")
-            choice = raw_input("> ")
+            choice = input("> ")
             if choice == "x":
                 break
             elif choice == "1":
@@ -313,23 +316,23 @@ class SchedulesDirect(object):
         lineups = self.get_subscribed_lineups()
         print(u"\nSubscribed Lineups:\n")
         for lineup in lineups:
-            print(u"Lineup:\t{0}".format(lineup.lineup_id))
-            print(u"Name:\t{0}".format(lineup.name))
-            print(u"Transport:\t{0}".format(lineup.transport))
-            print(u"Location:\t{0}".format(lineup.location))
+            print((u"Lineup:\t{0}".format(lineup.lineup_id)))
+            print((u"Name:\t{0}".format(lineup.name)))
+            print((u"Transport:\t{0}".format(lineup.transport)))
+            print((u"Location:\t{0}".format(lineup.location)))
             print(u"")
 
     def _add_lineup(self):
         while True:
             print(u"\nAdd Lineup\n")
             print(u"Enter 3-character country/region code or 'x' to cancel:")
-            country_code = raw_input("> ")
+            country_code = input("> ")
             if country_code == "x":
                 break
 
             while True:
                 print(u"Enter zip/postal code or 'x' to cancel:")
-                postal_code = raw_input("> ")
+                postal_code = input("> ")
                 if postal_code == "x":
                     break
 
@@ -346,14 +349,14 @@ class SchedulesDirect(object):
                     options = []
                     count = 0
                     for transport in transport_set:
-                        print(u"\nTransport: {0}\n".format(transport))
+                        print((u"\nTransport: {0}\n".format(transport)))
                         for (headend, lineup) in [(headend, lineup) for (headend, lineup) in headend_lineups if headend.type == transport]:
                             options.append((headend, lineup))
                             count += 1
-                            print(u"\t{0}. {1.name} ({2.location})".format(count, lineup, headend))
+                            print((u"\t{0}. {1.name} ({2.location})".format(count, lineup, headend)))
 
                     print(u"\nChoose a lineup to add or 'x' to cancel.")
-                    choice = raw_input("> ")
+                    choice = input("> ")
 
                     if choice == "x":
                         break
@@ -361,14 +364,14 @@ class SchedulesDirect(object):
                     choice = int(choice) - 1
                     (headend, lineup) = options[choice]
 
-                    print(u"Are you sure you want to add '{0} ({1})'? (y/n)".format(lineup.name, headend.location))
-                    if raw_input("> ") != "y":
+                    print((u"Are you sure you want to add '{0} ({1})'? (y/n)".format(lineup.name, headend.location)))
+                    if input("> ") != "y":
                         continue
 
                     response = self.add_lineup(lineup.lineup_id)
 
-                    print(u"Schedules Direct returned '{0}'.".format(response.response_status.message))
-                    print(u"{0} lineup changes remaining.\n".format(response.changes_remaining))
+                    print((u"Schedules Direct returned '{0}'.".format(response.response_status.message)))
+                    print((u"{0} lineup changes remaining.\n".format(response.changes_remaining)))
 
     def _list_lineup_channels(self):
 
@@ -382,10 +385,10 @@ class SchedulesDirect(object):
             for lineup in subscribed_lineups:
                 count += 1
                 options.append(lineup)
-                print(u"{0}. {1.name} ({1.location})".format(count, lineup))
+                print((u"{0}. {1.name} ({1.location})".format(count, lineup)))
 
             print(u"\nChoose a lineup to list channels or 'x' to cancel.")
-            choice = raw_input("> ")
+            choice = input("> ")
             if choice == "x":
                 break
 
@@ -395,7 +398,7 @@ class SchedulesDirect(object):
             lineup_map = self.get_lineup_map(lineup.lineup_id)
 
             for channel in lineup_map.channels:
-                print(u"{0}\t{1.callsign} '{1.name}'".format(channel.channel, channel.station))
+                print((u"{0}\t{1.callsign} '{1.name}'".format(channel.channel, channel.station)))
 
     def _remove_lineup(self):
 
@@ -409,21 +412,21 @@ class SchedulesDirect(object):
             for lineup in subscribed_lineups:
                 count += 1
                 options.append(lineup)
-                print(u"{0}. {1.name} ({1.location})".format(count, lineup))
+                print((u"{0}. {1.name} ({1.location})".format(count, lineup)))
 
             print(u"\nChoose a lineup to remove or 'x' to cancel.")
-            choice = raw_input("> ")
+            choice = input("> ")
             if choice == "x":
                 break
 
             choice = int(choice) - 1
             lineup = options[choice]
 
-            print(u"Are you sure you want to remove '{0.name} ({0.location})'? (y/n)".format(lineup))
-            if raw_input("> ") != "y":
+            print((u"Are you sure you want to remove '{0.name} ({0.location})'? (y/n)".format(lineup)))
+            if input("> ") != "y":
                 continue
 
             response = self.remove_lineup(lineup.lineup_id)
 
-            print(u"\nSchedules Direct returned '{0}'.".format(response.response_status.message))
-            print(u"{0} lineup changes remaining.\n".format(response.changes_remaining))
+            print((u"\nSchedules Direct returned '{0}'.".format(response.response_status.message)))
+            print((u"{0} lineup changes remaining.\n".format(response.changes_remaining)))

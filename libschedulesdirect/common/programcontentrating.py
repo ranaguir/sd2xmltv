@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class ProgramContentRating(object):
@@ -13,7 +15,7 @@ class ProgramContentRating(object):
         return u"{0.body}: {0.code}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: Iterable[dict] -> List[ProgramContentRating]
@@ -43,6 +45,6 @@ class ProgramContentRating(object):
             program_content_rating.country = dct.pop("country")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramContentRating: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramContentRating: %s", ", ".join(list(dct.keys())))
 
         return program_content_rating

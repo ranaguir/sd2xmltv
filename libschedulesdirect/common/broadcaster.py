@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class Broadcaster(object):
@@ -15,7 +17,7 @@ class Broadcaster(object):
         return u"Broadcaster in {0.city}, {0.state}, {0.country}, {0.postalcode}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> Broadcaster
@@ -39,6 +41,6 @@ class Broadcaster(object):
             broadcaster.country = dct.pop("country")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Broadcaster: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Broadcaster: %s", ", ".join(list(dct.keys())))
 
         return broadcaster

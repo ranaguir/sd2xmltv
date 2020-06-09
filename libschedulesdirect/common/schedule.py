@@ -1,7 +1,9 @@
+from __future__ import absolute_import
 import logging
-from responsestatus import ResponseStatus
-from broadcast import Broadcast
-from schedulemetadata import ScheduleMetadata
+from .responsestatus import ResponseStatus
+from .broadcast import Broadcast
+from .schedulemetadata import ScheduleMetadata
+import six
 
 
 class Schedule(object):
@@ -21,7 +23,7 @@ class Schedule(object):
         return u"{1.start_date} Schedule for Station {0.station_id}".format(self, self.metadata)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @staticmethod
     def from_dict(dct):  # type: (dict) -> Schedule
@@ -46,6 +48,6 @@ class Schedule(object):
         schedule.metadata = ScheduleMetadata.from_dict(dct.pop("metadata"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Schedule: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Schedule: %s", ", ".join(list(dct.keys())))
 
         return schedule

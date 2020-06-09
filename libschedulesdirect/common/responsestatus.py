@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_datetime
+from .util import parse_datetime
 
 
 class ResponseStatus(object):

@@ -1,4 +1,5 @@
-from discovereddevice import DiscoveredDevice
+from __future__ import absolute_import
+from .discovereddevice import DiscoveredDevice
 
 
 class DiscoveredDeviceList(list):

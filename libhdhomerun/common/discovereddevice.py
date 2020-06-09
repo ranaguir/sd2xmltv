@@ -1,3 +1,4 @@
+import six
 
 
 class DiscoveredDevice(object):
@@ -16,7 +17,7 @@ class DiscoveredDevice(object):
         return "Device {0.device_id} at {0.local_ip}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> DiscoveredDevice

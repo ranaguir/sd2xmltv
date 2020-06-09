@@ -1,18 +1,20 @@
+from __future__ import absolute_import
 import logging
 from datetime import date
-from util import parse_date
-from programtitles import ProgramTitles
-from programeventdetails import ProgramEventDetails
-from programdescriptionlist import ProgramDescriptionList
-from programmetadata import ProgramMetadata
-from programcast import ProgramCast
-from programcrew import ProgramCrew
-from programcontentrating import ProgramContentRating
-from programrecommendation import ProgramRecommendation
-from programmovie import ProgramMovie
-from programkeywords import ProgramKeywords
-from image import Image
-from programaward import ProgramAward
+from .util import parse_date
+from .programtitles import ProgramTitles
+from .programeventdetails import ProgramEventDetails
+from .programdescriptionlist import ProgramDescriptionList
+from .programmetadata import ProgramMetadata
+from .programcast import ProgramCast
+from .programcrew import ProgramCrew
+from .programcontentrating import ProgramContentRating
+from .programrecommendation import ProgramRecommendation
+from .programmovie import ProgramMovie
+from .programkeywords import ProgramKeywords
+from .image import Image
+from .programaward import ProgramAward
+import six
 
 
 class Program(object):
@@ -99,7 +101,7 @@ class Program(object):
         return u"{0.program_id} '{1.title120}'".format(self, self.titles)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     def get_content_rating(self, body):
         return next((content_rating for content_rating in self.content_ratings if content_rating.body == body), None)
@@ -204,6 +206,6 @@ class Program(object):
             program.awards = ProgramAward.from_iterable(dct.pop("awards"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Program: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Program: %s", ", ".join(list(dct.keys())))
 
         return program

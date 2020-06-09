@@ -1,11 +1,13 @@
 #!/usr/bin/python
 # coding=utf-8
 
-import urllib2
+from __future__ import absolute_import
+import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
 import json
 import gzip
 import logging
 from . import jsonify
+import six
 try:
     import cStringIO as StringIO
 except ImportError:
@@ -188,7 +190,7 @@ def _get_request(method, uri, token=None, post_data=None):  # type: (unicode, un
     json_data = None
     if post_data is not None:
         json_data = jsonify(post_data)
-    request = urllib2.Request(url=_base_url + _base_uri + uri, data=json_data)
+    request = six.moves.urllib.request.Request(url=_base_url + _base_uri + uri, data=json_data)
     request.get_method = lambda: method
     if json_data is not None:
         request.add_header("Content-Length", len(json_data))
@@ -220,13 +222,13 @@ def _get_response(request):  # type: (Any) -> Any
     logger.debug("_get_response()")
 
     if logger.isEnabledFor(logging.DEBUG):
-        opener = urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=1))
+        opener = six.moves.urllib.request.build_opener(six.moves.urllib.request.HTTPSHandler(debuglevel=1))
     else:
-        opener = urllib2.build_opener(urllib2.HTTPSHandler())
+        opener = six.moves.urllib.request.build_opener(six.moves.urllib.request.HTTPSHandler())
 
     try:
         response = opener.open(request)
-    except urllib2.HTTPError, error_response:
+    except six.moves.urllib.error.HTTPError as error_response:
         response = error_response
 
     content_encoding = response.headers.get("content-encoding", "")
@@ -241,4 +243,4 @@ def _get_response(request):  # type: (Any) -> Any
     if content_type.startswith("application/json"):
         return json.load(fp=buf, encoding=encoding)
 
-    return unicode(buf.read(), encoding)
+    return six.text_type(buf.read(), encoding)

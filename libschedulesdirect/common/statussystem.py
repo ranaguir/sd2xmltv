@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_datetime
+from .util import parse_datetime
 
 
 class StatusSystem(object):
@@ -37,6 +38,6 @@ class StatusSystem(object):
             system_status.message = dct.pop("message")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for StatusSystem: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for StatusSystem: %s", ", ".join(list(dct.keys())))
 
         return system_status

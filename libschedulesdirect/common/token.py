@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from responsestatus import ResponseStatus
+from .responsestatus import ResponseStatus
 
 
 class Token(object):
@@ -23,6 +24,6 @@ class Token(object):
             token.token = dct.pop("token")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Token: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Token: %s", ", ".join(list(dct.keys())))
 
         return token

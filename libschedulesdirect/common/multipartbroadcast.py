@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -21,6 +22,6 @@ class MultipartBroadcast(object):
         multipart_broadcast.total_parts = dct.pop("totalParts")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for MultipartBroadcast: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for MultipartBroadcast: %s", ", ".join(list(dct.keys())))
 
         return multipart_broadcast

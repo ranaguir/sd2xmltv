@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
 
+from __future__ import absolute_import
 import argparse
 import logging
 import logging.config
@@ -10,6 +11,7 @@ from libschedulesdirect.schedulesdirect import SchedulesDirect
 from datetime import datetime
 from libhdhomerun.client import HDHomeRunClient
 from itertools import islice
+import six
 
 
 class Sd2Xmltv:
@@ -132,11 +134,11 @@ class Sd2Xmltv:
                         program_artwork = program_artwork_lookup.get(program.artwork_id, None)
                         self._add_programme(f, program, channel, broadcast, program_artwork)
 
-                    self._logger.debug(u"Added %s programs for channel %s on %s.", programs_added, channel.get_display_names().next(), date)
+                    self._logger.debug(u"Added %s programs for channel %s on %s.", programs_added, next(channel.get_display_names()), date)
 
                     channel_programs_added += programs_added
 
-                self._logger.info(u"Added %s programs for channel %s.", channel_programs_added, channel.get_display_names().next())
+                self._logger.info(u"Added %s programs for channel %s.", channel_programs_added, next(channel.get_display_names()))
 
                 total_programs_added += channel_programs_added
 
@@ -277,7 +279,7 @@ class Sd2Xmltv:
         elif broadcast.is_new:
             program_attributes.append(u"New")
         elif program.original_air_date is not None:
-            program_attributes.append(unicode(program.original_air_date.strftime("%Y-%m-%d")))
+            program_attributes.append(six.text_type(program.original_air_date.strftime("%Y-%m-%d")))
 
         if program.is_episode_entity:
             if program.metadata is not None and \
@@ -325,9 +327,9 @@ class Sd2Xmltv:
         xmltv_channel.save(fp, encoding=self._encoding)
 
     def _export_icons(self, stations):
-        import urllib
+        import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
         import os
-        from urlparse import urlparse
+        from six.moves.urllib.parse import urlparse
         for station in stations:
             if station.logo is None:
                 continue
@@ -336,7 +338,7 @@ class Sd2Xmltv:
             (path, filename) = os.path.split(path[2])
             (filename, extension) = os.path.splitext(filename)
 
-            image_on_web = urllib.urlopen(url)
+            image_on_web = six.moves.urllib.request.urlopen(url)
             if image_on_web.headers.maintype != "image":
                 image_on_web.close()
                 continue

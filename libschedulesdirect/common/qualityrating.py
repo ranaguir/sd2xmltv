@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+from six import unichr
 
 
 class QualityRating(object):
@@ -55,6 +57,6 @@ class QualityRating(object):
             quality_rating.ratings_body = dct.pop("ratingsBody")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for QualityRating: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for QualityRating: %s", ", ".join(list(dct.keys())))
 
         return quality_rating

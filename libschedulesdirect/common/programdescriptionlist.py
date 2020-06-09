@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from programdescription import ProgramDescription
+from .programdescription import ProgramDescription
 
 
 class ProgramDescriptionList(list):
@@ -34,6 +35,6 @@ class ProgramDescriptionList(list):
             program_description_list.extend(ProgramDescription.from_iterable(dct.pop("description1000")))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramDescriptions: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramDescriptions: %s", ", ".join(list(dct.keys())))
 
         return program_description_list

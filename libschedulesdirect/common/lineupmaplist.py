@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from util import unique
+from .util import unique
 
 
 class LineupMapList(list):

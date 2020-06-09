@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import logging
 import collections
+import six
 
 class Image(object):
     def __init__(self):
@@ -34,7 +36,7 @@ class Image(object):
         return u"{0.tier} {0.category} {0.size} {0.width}x{0.height} ({0.aspect}) {0.url}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> Image
@@ -76,7 +78,7 @@ class Image(object):
             image.tier = dct.pop("tier")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Image: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Image: %s", ", ".join(list(dct.keys())))
 
         return image
 

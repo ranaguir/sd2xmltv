@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
 import collections
-from imagelist import ImageList
+from .imagelist import ImageList
 
 
 class ProgramArtwork(object):
@@ -26,7 +27,7 @@ class ProgramArtwork(object):
         program_artwork.image_list = ImageList.from_iterable(dct.pop("data"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramArtwork: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramArtwork: %s", ", ".join(list(dct.keys())))
 
         return program_artwork
 

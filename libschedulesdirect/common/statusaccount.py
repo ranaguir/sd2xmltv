@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_datetime
+from .util import parse_datetime
 
 
 class StatusAccount(object):
@@ -30,6 +31,6 @@ class StatusAccount(object):
             status_account.max_lineups = dct.pop("maxLineups")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for StatusAccount: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for StatusAccount: %s", ", ".join(list(dct.keys())))
 
         return status_account

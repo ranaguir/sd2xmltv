@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from six.moves import map
+from six.moves import range
 __author__ = 'Adrian Strilchuk'
 
 from datetime import datetime, date
@@ -10,11 +13,11 @@ def jsonify(obj):
 
 # http://stackoverflow.com/questions/14163399/convert-list-of-datestrings-to-datetime-very-slow-with-python-strptime
 def parse_datetime(dt_str):
-    return datetime(*map(int, [dt_str[0:4], dt_str[5:7], dt_str[8:10], dt_str[11:13], dt_str[14:16], dt_str[17:19]]))
+    return datetime(*list(map(int, [dt_str[0:4], dt_str[5:7], dt_str[8:10], dt_str[11:13], dt_str[14:16], dt_str[17:19]])))
 
 
 def parse_date(d_str):
-    return date(*map(int, d_str.split(u"-")))
+    return date(*list(map(int, d_str.split(u"-"))))
 
 
 def unique(iterable, key_func=None):
@@ -29,7 +32,7 @@ def unique(iterable, key_func=None):
 
 
 def batchx(iterable, batch_size):
-    for index in xrange(0, len(iterable), batch_size):
+    for index in range(0, len(iterable), batch_size):
         yield iterable[index:index + batch_size]
 
 

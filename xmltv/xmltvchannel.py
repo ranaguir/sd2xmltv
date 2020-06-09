@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import Element, SubElement

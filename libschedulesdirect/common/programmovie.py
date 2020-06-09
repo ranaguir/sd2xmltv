@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from qualityrating import QualityRating
+from .qualityrating import QualityRating
 
 
 class ProgramMovie(object):
@@ -29,6 +30,6 @@ class ProgramMovie(object):
             program_movie.year = dct.pop("year")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramMovie: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramMovie: %s", ", ".join(list(dct.keys())))
 
         return program_movie

@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 import logging
+import six
 
 
 class ProgramCrew(object):
@@ -17,7 +19,7 @@ class ProgramCrew(object):
         return self.name
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> List[ProgramCrew]
@@ -53,6 +55,6 @@ class ProgramCrew(object):
             program_crew.name = dct.pop("name")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramCrew: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramCrew: %s", ", ".join(list(dct.keys())))
 
         return program_crew

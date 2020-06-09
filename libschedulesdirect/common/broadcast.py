@@ -1,8 +1,10 @@
+from __future__ import absolute_import
 import logging
 from collections import Iterable
 from datetime import datetime, timedelta
-from util import parse_datetime
-from multipartbroadcast import MultipartBroadcast
+from .util import parse_datetime
+from .multipartbroadcast import MultipartBroadcast
+import six
 
 
 class Broadcast(object):
@@ -89,7 +91,7 @@ class Broadcast(object):
         return u"Broadcast of {0.program_id} at {0.air_date_time}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> List[Broadcast]
@@ -179,6 +181,6 @@ class Broadcast(object):
             broadcast.parental_advisory = dct.pop("parentalAdvisory")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Broadcast: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Broadcast: %s", ", ".join(list(dct.keys())))
 
         return broadcast

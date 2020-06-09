@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -47,6 +48,6 @@ class SeasonEpisode(object):
             season_episode.total_seasons = dct.pop("totalSeasons")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for SeasonEpisode: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for SeasonEpisode: %s", ", ".join(list(dct.keys())))
 
         return season_episode

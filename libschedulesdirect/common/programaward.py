@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -57,6 +58,6 @@ class ProgramAward(object):
             program_award.personId = dct.pop(u"personId")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramAward: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramAward: %s", ", ".join(list(dct.keys())))
 
         return program_award

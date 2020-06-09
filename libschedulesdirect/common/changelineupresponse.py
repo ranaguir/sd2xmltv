@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import logging
-from responsestatus import ResponseStatus
+from .responsestatus import ResponseStatus
+import six
 
 
 class ChangeLineupResponse(object):
@@ -12,7 +14,7 @@ class ChangeLineupResponse(object):
         return self.response_status.message
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_dict(cls, dct):  # type: (dict) -> ChangeLineupResponse
@@ -29,6 +31,6 @@ class ChangeLineupResponse(object):
             change_lineup_response.changes_remaining = dct.pop("changesRemaining")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ChangeLineupResponse: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ChangeLineupResponse: %s", ", ".join(list(dct.keys())))
 
         return change_lineup_response

@@ -1,6 +1,8 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_datetime
+from .util import parse_datetime
+import six
 
 
 class Lineup(object):
@@ -23,7 +25,7 @@ class Lineup(object):
         return self.lineup_id
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: Iterable[dict] -> List[Lineup]
@@ -64,6 +66,6 @@ class Lineup(object):
             lineup.is_deleted = dct.pop("isDeleted")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Lineup: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Lineup: %s", ", ".join(list(dct.keys())))
 
         return lineup

@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_date, parse_datetime
+from .util import parse_date, parse_datetime
 
 
 class ScheduleMetadata(object):
@@ -35,6 +36,6 @@ class ScheduleMetadata(object):
             schedule_metadata.code = dct.pop("code")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ScheduleMetadata: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ScheduleMetadata: %s", ", ".join(list(dct.keys())))
 
         return schedule_metadata

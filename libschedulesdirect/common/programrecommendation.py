@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -32,6 +33,6 @@ class ProgramRecommendation(object):
             program_recommendation.title120 = dct.pop("title120")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ProgramRecommendation: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ProgramRecommendation: %s", ", ".join(list(dct.keys())))
 
         return program_recommendation

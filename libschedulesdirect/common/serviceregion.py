@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import logging
-from servicecountry import ServiceCountry
+from .servicecountry import ServiceCountry
 
 
 class ServiceRegion(object):

@@ -1,5 +1,7 @@
+from __future__ import absolute_import
 import logging
-from station import Station
+from .station import Station
+import six
 
 
 class Channel(object):
@@ -56,7 +58,7 @@ class Channel(object):
         return u"Channel {0.channel}".format(self)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
+        return six.text_type(self).encode("utf-8")
 
     @classmethod
     def from_iterable(cls, iterable):  # type: (Iterable[dict]) -> List[Channel]
@@ -128,6 +130,6 @@ class Channel(object):
             channel.fec = dct.pop("fec")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Channel: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Channel: %s", ", ".join(list(dct.keys())))
 
         return channel

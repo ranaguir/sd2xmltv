@@ -1,7 +1,9 @@
-import urllib2
-from common import Lineup, DiscoveredDeviceList, DiscoveredDevice, Device
+from __future__ import absolute_import
+import six.moves.urllib.request, six.moves.urllib.error, six.moves.urllib.parse
+from .common import Lineup, DiscoveredDeviceList, DiscoveredDevice, Device
 import json
 import logging
+import six
 
 
 class HDHomeRunClient(object):
@@ -20,7 +22,7 @@ class HDHomeRunClient(object):
 
         self._ip_list = []  # type: List[unicode]
 
-        if ip_list is unicode:
+        if ip_list is six.text_type:
             self._ip_list = [ip_list]
         else:
             self._ip_list = ip_list
@@ -104,11 +106,11 @@ class HDHomeRunClient(object):
         :param url:
         :return:
         """
-        response = urllib2.urlopen(url)
+        response = six.moves.urllib.request.urlopen(url)
 
         encoding = response.headers['content-type'].split('charset=')[-1]
 
-        json_text = unicode(response.read(), encoding=encoding)
+        json_text = six.text_type(response.read(), encoding=encoding)
 
         return Lineup.from_iterable(json.loads(json_text))
 
@@ -134,11 +136,11 @@ class HDHomeRunClient(object):
         :param url:
         :return:
         """
-        response = urllib2.urlopen(url)
+        response = six.moves.urllib.request.urlopen(url)
 
         encoding = response.headers['content-type'].split('charset=')[-1]
 
-        json_text = unicode(response.read(), encoding)
+        json_text = six.text_type(response.read(), encoding)
 
         return Device.from_dict(json.loads(json_text))
 
@@ -147,10 +149,10 @@ class HDHomeRunClient(object):
 
         :return:
         """
-        response = urllib2.urlopen(self._public_discovery_url)
+        response = six.moves.urllib.request.urlopen(self._public_discovery_url)
 
         encoding = response.headers['content-type'].split('charset=')[-1]
 
-        json_text = unicode(response.read(), encoding)
+        json_text = six.text_type(response.read(), encoding)
 
         return DiscoveredDeviceList.from_iterable(json.loads(json_text))

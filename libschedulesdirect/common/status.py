@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 import logging
 from datetime import datetime
-from util import parse_datetime
-from lineup import Lineup
-from statusaccount import StatusAccount
-from statussystem import StatusSystem
+from .util import parse_datetime
+from .lineup import Lineup
+from .statusaccount import StatusAccount
+from .statussystem import StatusSystem
 
 
 class Status(object):
@@ -59,6 +60,6 @@ class Status(object):
             status.datetime = parse_datetime(dct.pop("datetime"))
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for Status: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for Status: %s", ", ".join(list(dct.keys())))
 
         return status

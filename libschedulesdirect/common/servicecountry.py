@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 
 
@@ -38,6 +39,6 @@ class ServiceCountry(object):
             service_country.onePostalCode = dct.pop("onePostalCode")
 
         if len(dct) != 0:
-            logging.warn("Key(s) not processed for ServiceCountry: %s", ", ".join(dct.keys()))
+            logging.warn("Key(s) not processed for ServiceCountry: %s", ", ".join(list(dct.keys())))
 
         return service_country
